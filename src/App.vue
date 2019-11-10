@@ -22,19 +22,22 @@
     </v-app-bar>
 
     <v-content>
-      <Dashboard />
+      <!-- <Dashboard /> -->
+      <Roster  />
     </v-content>
   </v-app>
 </template>
 
 <script>
 import Dashboard from './components/Dashboard';
+import Roster from './components/Roster'
 
 export default {
   name: 'App',
 
   components: {
     Dashboard,
+    Roster
   },
 
   data: () => ({

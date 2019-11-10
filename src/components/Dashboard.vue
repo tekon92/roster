@@ -4,14 +4,14 @@
       <v-flex xs12>
         <v-data-table :headers="headers" :items="desserts" :items-per-page="5" class="elevation-1">
 
-            <div v-for="i in 2" :key="i">
+            <!-- <div v-for="i in 2" :key="i">
                 <template v-slot:item.date1="{ item }">
                     <div v-if="item.date1 === 1">test1</div>
                     <div v-else-if="item.date1 === 2">test2</div>
                     <div v-else-if="item.date1 === 3">test3</div>
                 </template>
-            </div>
-          <!-- <template v-slot:item.date1="{ item }">
+            </div> -->
+          <template v-slot:item.date1="{ item }">
             <div v-if="item.date1 === 1">test1</div>
             <div v-else-if="item.date1 === 2">test2</div>
             <div v-else-if="item.date1 === 3">test3</div>
@@ -21,7 +21,7 @@
             <div v-if="item.date2 === 1">test1</div>
             <div v-else-if="item.date2 === 2">test2</div>
             <div v-else-if="item.date2 === 3">test3</div>
-          </template> -->
+          </template>
 
           <!-- <template v-slot:item.date1="{ item }">
                 {{ Object.keys(item).length-2 }}
