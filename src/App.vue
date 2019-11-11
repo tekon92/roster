@@ -22,8 +22,8 @@
     </v-app-bar>
 
     <v-content>
-      <!-- <Dashboard /> -->
-      <Roster  />
+      <Dashboard />
+      <!-- <Roster  /> -->
     </v-content>
   </v-app>
 </template>
