@@ -9,14 +9,24 @@
         </thead>
         <tbody>
           <tr v-for="item in desserts" :key="item.name">
-            <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
+            <td class="sticky-col first-col">{{ item.name }}</td>
+            <td class="sticky-col second-col">{{ item.ID }}</td>
             <!-- <td>{{ item.status }}</td> -->
             <td
               v-for="stats in item.status"
               :key="stats.id"
               v-bind:style="{ backgroundColor: newCol(stats[0]) }"
+              v-if="!isEditing"
             >{{ stats[0] }}</td>
+            <td v-else>
+              <v-select
+                v-model="stats[0]"
+                :items="items"
+                required
+              >
+              {{stats[0]}}
+              </v-select>
+            </td>
           </tr>
         </tbody>
       </template>
@@ -42,8 +52,32 @@
       <v-col cols="6" md="3">
         <v-switch v-model="fixedHeader" label="Toggle fixed-header" class="mx-4"></v-switch>
       </v-col>-->
-      <v-col cols="6" md="3">
+      <v-col cols="6" md="3" v-show="!isEditing">
         <v-btn @click="addNewEmp()">Add new Employee</v-btn>
+      </v-col>
+      <v-col cols="6" md="3">
+        <v-btn 
+          @click="editRoster()"
+          v-if="!isEditing"
+          :loading="loading"
+          :disabled="loading"
+        >
+          Edit Roster
+          <template v-slot:loader>
+            <span>Loading...</span>
+          </template>
+        </v-btn>
+        <v-btn 
+          @click="updateRoster()" 
+          v-else
+          :loading="loading"
+          :disabled="loading"
+        >
+          Update Roster
+          <template v-slot:loader>
+            <span>Loading...</span>
+          </template>
+        </v-btn>
       </v-col>
     </v-row>
   </div>
@@ -85,12 +119,39 @@ export default {
     },
     addNewEmp() {
       this.desserts.push(this.desserts[this.desserts.length - 1]);
+    },
+    editRoster() {
+      this.isEditing = true
+      this.loader = 'loading'
+    },
+    updateRoster() {
+      this.isEditing = false
+    }
+  },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+      this.loader = null
     }
   },
   data: () => ({
-    bgc: {
-      backgroundColor: ""
-    },
+    select: null,
+      items: [
+        'G',
+        'CO',
+        'C',
+        'S',
+        'A',
+        'B',
+        'L',
+        'O'
+      ],
+      loader: null,
+        loading: false,
+    isEditing: false,
     currStat: "O",
     dense: false,
     fixedHeader: true,
@@ -100,7 +161,7 @@ export default {
         title: "name"
       },
       {
-        title: "calories"
+        title: "ID"
       },
       {
         title: "1",
@@ -226,7 +287,7 @@ export default {
     desserts: [
       {
         name: "Frozen Yogurt",
-        calories: 159,
+        ID: 159,
         status: {
           date_1: ["A", 1, "Friday", "Weekday"],
           date_2: ["G", 2, "Saturday", "Weekend"],
@@ -262,7 +323,7 @@ export default {
       },
       {
         name: "Ice cream sandwich",
-        calories: 237,
+        ID: 237,
         status: {
           date_1: ["A", 1, "Friday", "Weekday"],
           date_2: ["G", 2, "Saturday", "Weekend"],
@@ -298,7 +359,7 @@ export default {
       },
       {
         name: "Eclair",
-        calories: 262,
+        ID: 262,
         status: {
           date_1: ["A", 1, "Friday", "Weekday"],
           date_2: ["G", 2, "Saturday", "Weekend"],
@@ -334,7 +395,7 @@ export default {
       },
       {
         name: "Cupcake",
-        calories: 305,
+        ID: 305,
         status: {
           date_1: ["A", 1, "Friday", "Weekday"],
           date_2: ["G", 2, "Saturday", "Weekend"],
@@ -370,7 +431,7 @@ export default {
       },
       {
         name: "Gingerbread",
-        calories: 356,
+        ID: 356,
         status: {
           date_1: ["A", 1, "Friday", "Weekday"],
           date_2: ["G", 2, "Saturday", "Weekend"],
@@ -408,3 +469,25 @@ export default {
   })
 };
 </script>
+
+<style lang="css" scoped>
+/* .sticky-col {
+    position: sticky;
+    position: -webkit-sticky;    
+    background-color: white;
+}
+  
+.first-col {
+	width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+	left: 0px;    
+}
+
+.second-col {
+	width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+	left: 100px;    
+} */
+</style>

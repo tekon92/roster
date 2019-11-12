@@ -1,0 +1,6 @@
+-- todo 
+1. homepage to create new roster -> list by mont
+2. add new roster -> add month and year (using js)
+3. function to generate header based on month and year 
+4. start empty page with headers and add employee -> need to create source
+5. fill all with name of empy and ID, the rest generarale
